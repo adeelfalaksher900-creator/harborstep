@@ -42,7 +42,7 @@ These pages were reviewed October 27, 2026. The product does not assert that the
 
 ## Validation status
 
-Automated domain tests cover required appointment inputs, filtering by chosen support needs, cost totals, and date display. Browser accessibility and end-to-end testing are still required. No patient outcome study or clinical validation has been conducted.
+Automated tests cover appointment validation, resource filtering, cost totals, date display, and handling unreadable or unavailable browser storage. A basic desktop journey has been exercised in a browser; comprehensive mobile, keyboard, print, and accessibility testing remain outstanding. No patient outcome study, clinical validation, or independent security audit has been conducted.
 
 ## License
 

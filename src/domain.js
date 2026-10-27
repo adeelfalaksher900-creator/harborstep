@@ -6,16 +6,34 @@ export const RESOURCES = [
 ];
 
 export const NEEDS = [{id:"ride",label:"Transportation"},{id:"stay",label:"Lodging"},{id:"cost",label:"Financial support"}];
+export const US_REGIONS = ["AL","AK","AZ","AR","CA","CO","CT","DE","DC","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY","AS","GU","MP","PR","VI"];
+
+export function isCalendarDate(value) {
+  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const [year, month, day] = value.split("-").map(Number);
+  if (year < 1 || month < 1 || month > 12 || day < 1) return false;
+  const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  return day <= [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month - 1];
+}
+
 export function validatePlan(plan) {
   const errors={};
-  if (!plan.label.trim()) errors.label="Give this appointment a name.";
-  if (!plan.date || !/^\d{4}-\d{2}-\d{2}$/.test(plan.date)) errors.date="Choose an appointment date.";
-  if (!plan.city.trim()) errors.city="Enter a city.";
-  if (!/^[A-Z]{2}$/.test(plan.state)) errors.state="Choose a U.S. state or territory.";
-  if (!plan.needs.length) errors.needs="Select at least one kind of support.";
+  if (typeof plan?.label !== "string" || !plan.label.trim() || plan.label.length > 80) errors.label="Give this appointment a name (up to 80 characters).";
+  if (!isCalendarDate(plan?.date)) errors.date="Choose a valid appointment date.";
+  if (typeof plan?.city !== "string" || !plan.city.trim() || plan.city.length > 80) errors.city="Enter a city (up to 80 characters).";
+  if (!US_REGIONS.includes(plan?.state)) errors.state="Choose a U.S. state or territory.";
+  if (!Array.isArray(plan?.needs) || !plan.needs.length || plan.needs.some(n => !NEEDS.some(need => need.id === n)) || new Set(plan.needs).size !== plan.needs.length) errors.needs="Select at least one kind of support.";
   return errors;
 }
+
+// Stored browser data is untrusted: corrupted or older data must never crash rendering.
+export function isStoredPlan(data) {
+  if (!data || typeof data !== "object" || Object.keys(validatePlan(data.plan)).length || !Array.isArray(data.tasks) || !Array.isArray(data.expenses)) return false;
+  const idsAreUnique = items => new Set(items.map(item => item.id)).size === items.length;
+  return data.tasks.every(t => t && typeof t.id === "string" && t.id.length > 0 && typeof t.text === "string" && t.text.trim().length > 0 && t.text.length <= 120 && typeof t.done === "boolean") && idsAreUnique(data.tasks)
+    && data.expenses.every(x => x && typeof x.id === "string" && x.id.length > 0 && typeof x.label === "string" && x.label.trim().length > 0 && x.label.length <= 80 && typeof x.amount === "number" && Number.isFinite(x.amount) && x.amount >= 0 && x.amount <= 1000000) && idsAreUnique(data.expenses);
+}
 export function relevantResources(needs) { return RESOURCES.filter(r=>needs.includes(r.category)); }
-export function expensesTotal(expenses) { return expenses.reduce((total,item)=>total+Number(item.amount||0),0); }
+export function expensesTotal(expenses) { return expenses.reduce((total,item)=>total+Math.round(Number(item.amount || 0)*100),0)/100; }
 export function money(value) { return new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(value); }
-export function displayDate(value) { if (!value) return ""; const [y,m,d]=value.split("-").map(Number); return new Intl.DateTimeFormat("en-US",{dateStyle:"long",timeZone:"UTC"}).format(new Date(Date.UTC(y,m-1,d))); }
+export function displayDate(value) { if (!isCalendarDate(value)) return ""; const [y,m,d]=value.split("-").map(Number); const date = new Date(0); date.setUTCFullYear(y,m-1,d); date.setUTCHours(0,0,0,0); return new Intl.DateTimeFormat("en-US",{dateStyle:"long",timeZone:"UTC"}).format(date); }

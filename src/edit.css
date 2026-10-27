@@ -1,1 +1,10 @@
 .edit-task{display:flex;align-items:center;gap:6px;width:100%;padding:7px 0}.edit-task input{width:100%;min-width:0;border:1px solid #d7e3e1;border-radius:9px;padding:10px;color:#193b49}.edit-task .outline{white-space:nowrap}.data-note button+button{margin-left:10px;color:#315b58}
+
+/* Keep user-entered text and controls usable on narrow screens. */
+.plan-heading h1,.plan-heading p,.task-label span,.expense-list span{overflow-wrap:anywhere}
+.task-label,.expense-list span{min-width:0}
+.icon-action{min-width:44px;min-height:44px}
+.filters button{min-height:44px}
+.form-card input[type=date]{min-width:0;max-width:100%}
+.resource-foot,.privacy,.form-footer>span{color:#58716e}
+@media(max-width:460px){.edit-task{flex-wrap:wrap}.edit-task input{flex-basis:100%}.edit-task .outline{min-height:44px}.heading-actions{flex-wrap:wrap}.heading-actions button{min-height:44px}}
