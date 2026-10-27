@@ -8,3 +8,20 @@
 .form-card input[type=date]{min-width:0;max-width:100%}
 .resource-foot,.privacy,.form-footer>span{color:#58716e}
 @media(max-width:460px){.edit-task{flex-wrap:wrap}.edit-task input{flex-basis:100%}.edit-task .outline{min-height:44px}.heading-actions{flex-wrap:wrap}.heading-actions button{min-height:44px}}
+
+
+.back-link{display:block}
+.confirm-task{display:flex;align-items:center;gap:6px;font-size:13px;color:#315b58}
+.confirm-task .outline{min-height:44px;padding:8px 10px}
+.print-url{display:none}
+@media screen{.screen-filtered{display:none}}
+@media print{.print-url{display:block;overflow-wrap:anywhere;font-size:10px;margin-top:6px}.confirm-task{display:none}}
+@media(max-width:460px){.task-row{flex-wrap:wrap}.confirm-task{width:100%;flex-wrap:wrap;padding-bottom:6px}}
+.calling-guide{border-left:3px solid #8ab5a8;padding:10px 14px;margin:15px 0 0!important;background:#f2f7f4;border-radius:0 8px 8px 0;color:#385f58!important}
+.task-label,.expense-list>div,.expense-list strong,.resource-card>p,.resource-card .caveat,.resource-card>a,.provider,.resource-foot,.panel-title p,.budget>p,.aside-help p,.data-note p,.form-card label,.expense-form label{font-size:14px;line-height:1.5}
+.resource-card>p,.resource-card .caveat,.provider,.resource-foot,.expense-list>div,.data-note p{color:#4d6764}
+.resource-card>a.phone{color:#23695e}
+.amount-label,.eyebrow{font-size:11px;color:#416c65}
+.task-row.done .task-label span{color:#59736e}
+.form-card input:not([type=checkbox]),.form-card select,.expense-form input,.add-row input{font-size:16px}
+h1:focus{outline:3px solid #196e78;outline-offset:4px}

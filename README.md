@@ -11,6 +11,8 @@ Harborstep helps people affected by cancer plan the practical side of a U.S. car
 3. Add, edit, complete, or remove next steps. Add or remove personal cost estimates.
 4. Print the plan using the browser's print dialog. The user chooses whether to share it.
 
+The resource list includes a cancer support helpline and 211 for help finding local services. Providers determine their own availability and eligibility.
+
 Plans are stored in the current browser's local storage, unencrypted. Clearing browser data deletes them; they do not sync between devices. Please do not enter names, diagnoses, treatment notes, contact details, or other sensitive information. A user can delete their plan using the in-app control.
 
 Harborstep is an independent project. It does not book transport, reserve lodging, submit applications, assess eligibility, or provide medical advice. It is not affiliated with the organizations linked from the product. The initial resource list is U.S.-focused and not exhaustive. Programs and funding can change; provider pages remain authoritative.
@@ -37,6 +39,8 @@ The app does not use a server or user account. Provider links lead to third-part
 - [American Cancer Society: Hope Lodge](https://www.cancer.org/support-programs-and-services/patient-lodging/hope-lodge.html)
 - [CancerCare financial assistance](https://www.cancercare.org/financial_assistance)
 - [Triage Cancer](https://triagecancer.org/)
+- [Cancer Support Community helpline](https://www.cancersupportcommunity.org/cancer-support-helpline)
+- [United Way 211](https://211.org/)
 
 These pages were reviewed October 27, 2026. The product does not assert that these programs are available to any particular user or make claims about outcomes.
 
@@ -47,3 +51,4 @@ Automated tests cover appointment validation, resource filtering, cost totals, d
 ## License
 
 MIT — see [LICENSE](LICENSE).
+

@@ -1,9 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { validatePlan, relevantResources, expensesTotal, displayDate, isStoredPlan, isCalendarDate } from "../src/domain.js";
+import { validatePlan, relevantResources, resourceMatches, expensesTotal, displayDate, isStoredPlan, isCalendarDate } from "../src/domain.js";
 
 test("plan requires logistics and a support need",()=>{assert.deepEqual(Object.keys(validatePlan({label:"",date:"",city:"",state:"",needs:[]})).sort(),["city","date","label","needs","state"]);});
-test("resources are filtered to selected needs",()=>{const items=relevantResources(["ride"]);assert.equal(items.length,1);assert.ok(items.every(x=>x.category==="ride"));});
+test("resources are filtered to selected needs",()=>{const items=relevantResources(["ride"]);assert.ok(items.some(x=>x.id==="acs-ride"));assert.ok(items.every(x=>resourceMatches(x,"ride")));assert.equal(items.some(x=>x.id==="united-way-211"),false);});
+test("a multi-need navigator appears once and remains available in each applicable filter",()=>{const items=relevantResources(["ride","stay","cost"]);const navigator=items.find(x=>x.id==="csc-navigation");assert.ok(navigator);assert.equal(items.filter(x=>x.id==="csc-navigation").length,1);for(const need of ["ride","stay","cost"])assert.equal(resourceMatches(navigator,need),true);});
 test("expenses sum decimal amounts and date stays on selected calendar day",()=>{assert.equal(expensesTotal([{amount:"5.50"},{amount:"4"}]),9.5);assert.equal(displayDate("2026-10-28"),"October 28, 2026");});
 
 
@@ -27,3 +28,4 @@ test("invalid or corrupted stored plans cannot reach the interface",()=>{
 test("expense totals avoid floating point display errors",()=>{
   assert.equal(expensesTotal([{amount:0.1},{amount:0.2}]),0.3);
 });
+
