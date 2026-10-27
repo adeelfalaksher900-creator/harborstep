@@ -8,6 +8,14 @@ export const RESOURCES = [
 ];
 
 export const NEEDS = [{id:"ride",label:"Transportation"},{id:"stay",label:"Lodging"},{id:"cost",label:"Financial support"}];
+export const SUGGESTED_TASKS = {ride:"Contact a ride program to ask about availability",stay:"Ask about lodging near the appointment",cost:"Ask a financial navigator what support is open"};
+
+// Add a suggestion only for a newly selected need, without changing existing work.
+export function reconcileSuggestedTasks(previousNeeds, nextNeeds, tasks, createId) {
+  const added = nextNeeds.filter(need => !previousNeeds.includes(need) && SUGGESTED_TASKS[need]);
+  const existing = new Set(tasks.map(task => task.text));
+  return [...tasks, ...added.filter(need => !existing.has(SUGGESTED_TASKS[need])).map(need => ({id:createId(), text:SUGGESTED_TASKS[need], done:false}))];
+}
 export const US_REGIONS = ["AL","AK","AZ","AR","CA","CO","CT","DE","DC","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY","AS","GU","MP","PR","VI"];
 
 export function isCalendarDate(value) {

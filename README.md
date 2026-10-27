@@ -6,9 +6,9 @@ Harborstep helps people affected by cancer plan the practical side of a U.S. car
 
 ## How it works
 
-1. Add an appointment name, date, city, and state. Select the kinds of support needed.
+1. Find provider contact details directly on the home page, or add an appointment name, date, city, and state to make a plan. Location is shown on the plan and does not filter or verify providers.
 2. Review links to established organizations. Confirm availability, funding, location, and eligibility directly with each provider.
-3. Add, edit, complete, or remove next steps. Add or remove personal cost estimates.
+3. Add, edit, complete, or remove next steps. Add, edit, or remove personal cost estimates. Selecting an additional support need adds a suggested step while keeping existing work.
 4. Print the plan using the browser's print dialog. The user chooses whether to share it.
 
 The resource list includes a cancer support helpline and 211 for help finding local services. Providers determine their own availability and eligibility.

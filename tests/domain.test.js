@@ -1,6 +1,16 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { validatePlan, relevantResources, resourceMatches, expensesTotal, displayDate, isStoredPlan, isCalendarDate } from "../src/domain.js";
+import { validatePlan, relevantResources, resourceMatches, expensesTotal, displayDate, isStoredPlan, isCalendarDate, reconcileSuggestedTasks, SUGGESTED_TASKS } from "../src/domain.js";
+
+test("new support needs add suggestions without deleting or duplicating existing work",()=>{
+  const tasks=[{id:"1",text:SUGGESTED_TASKS.ride,done:true},{id:"2",text:"Ask clinic",done:false}];
+  let nextId=3;
+  const updated=reconcileSuggestedTasks(["ride"],["stay","cost"],tasks,()=>String(nextId++));
+  assert.deepEqual(updated.slice(0,2),tasks);
+  assert.deepEqual(updated.slice(2).map(t=>t.text),[SUGGESTED_TASKS.stay,SUGGESTED_TASKS.cost]);
+  const again=reconcileSuggestedTasks(["stay","cost"],["ride","stay","cost"],updated,()=>String(nextId++));
+  assert.deepEqual(again,updated);
+});
 
 test("plan requires logistics and a support need",()=>{assert.deepEqual(Object.keys(validatePlan({label:"",date:"",city:"",state:"",needs:[]})).sort(),["city","date","label","needs","state"]);});
 test("resources are filtered to selected needs",()=>{const items=relevantResources(["ride"]);assert.ok(items.some(x=>x.id==="acs-ride"));assert.ok(items.every(x=>resourceMatches(x,"ride")));assert.equal(items.some(x=>x.id==="united-way-211"),false);});
