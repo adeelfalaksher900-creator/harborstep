@@ -38,6 +38,7 @@ The app does not use a server or user account. Provider links lead to third-part
 - [American Cancer Society: Road To Recovery](https://www.cancer.org/support-programs-and-services/road-to-recovery.html)
 - [American Cancer Society: Hope Lodge](https://www.cancer.org/support-programs-and-services/patient-lodging/hope-lodge.html)
 - [CancerCare financial assistance](https://www.cancercare.org/financial_assistance)
+- [CancerCare resource navigation](https://www.cancercare.org/resourcenavigation)
 - [Triage Cancer](https://triagecancer.org/)
 - [Cancer Support Community helpline](https://www.cancersupportcommunity.org/cancer-support-helpline)
 - [United Way 211](https://211.org/)

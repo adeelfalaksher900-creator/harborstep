@@ -15,6 +15,7 @@ test("new support needs add suggestions without deleting or duplicating existing
 test("plan requires logistics and a support need",()=>{assert.deepEqual(Object.keys(validatePlan({label:"",date:"",city:"",state:"",needs:[]})).sort(),["city","date","label","needs","state"]);});
 test("resources are filtered to selected needs",()=>{const items=relevantResources(["ride"]);assert.ok(items.some(x=>x.id==="acs-ride"));assert.ok(items.every(x=>resourceMatches(x,"ride")));assert.equal(items.some(x=>x.id==="united-way-211"),false);});
 test("a multi-need navigator appears once and remains available in each applicable filter",()=>{const items=relevantResources(["ride","stay","cost"]);const navigator=items.find(x=>x.id==="csc-navigation");assert.ok(navigator);assert.equal(items.filter(x=>x.id==="csc-navigation").length,1);for(const need of ["ride","stay","cost"])assert.equal(resourceMatches(navigator,need),true);});
+test("CancerCare navigation is listed for transport and costs without duplicates",()=>{const items=relevantResources(["ride","cost"]);const item=items.find(x=>x.id==="cancercare-navigation");assert.ok(item);assert.equal(items.filter(x=>x.id===item.id).length,1);assert.equal(resourceMatches(item,"ride"),true);assert.equal(resourceMatches(item,"cost"),true);assert.equal(resourceMatches(item,"stay"),false);});
 test("expenses sum decimal amounts and date stays on selected calendar day",()=>{assert.equal(expensesTotal([{amount:"5.50"},{amount:"4"}]),9.5);assert.equal(displayDate("2026-10-28"),"October 28, 2026");});
 
 
